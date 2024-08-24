@@ -1,12 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { AppService } from './app.service';
 import { InjectTemporalClient } from 'nestjs-temporal';
 import { WorkflowClient } from '@temporalio/client';
 import { createTaskWorkflow, getAllTaskWorkflow, getTaskByIdWorkflow, updateTaskWorkflow, deleteTaskWorkflow } from './temporal/workflow';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, @InjectTemporalClient() private readonly temporalClient: WorkflowClient,) {}
+  constructor(@InjectTemporalClient() private readonly temporalClient: WorkflowClient,) {}
 
   @Post()
   async createTask(@Body() taskData: any) {
@@ -56,6 +55,5 @@ export class AppController {
       workflowId: 'wf-id-' + Math.floor(Math.random() * 1000),
     });
     return handle
-    // return this.appService.deleteTask(id);
   }
 }
