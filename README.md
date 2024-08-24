@@ -10,7 +10,7 @@ The Temporal server is required to run the workflows. We will use Docker to set 
 Run the following command to start the Temporal server using Docker Compose:
 
 ```
-docker-compose up
+docker compose -f ./docker-compose.yml --env-file ./env.temporal up -d
 ```
 
 The temporal-ui will run at http://localhost:8080.
