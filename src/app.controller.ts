@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { AppService } from './app.service';
 import { InjectTemporalClient } from 'nestjs-temporal';
 import { WorkflowClient } from '@temporalio/client';
-import { createTaskWorkflow } from './temporal/workflow';
+import { createTaskWorkflow, getAllTaskWorkflow, getTaskByIdWorkflow, updateTaskWorkflow, deleteTaskWorkflow } from './temporal/workflow';
 
 @Controller()
 export class AppController {
@@ -20,21 +20,42 @@ export class AppController {
 
   @Get()
   async getAllTasks() {
-    return this.appService.getAllTasks();
+    const handle = await this.temporalClient.execute(getAllTaskWorkflow, {
+      args: [],
+      taskQueue: 'default',
+      workflowId: 'wf-id-' + Math.floor(Math.random() * 1000),
+    });
+    return handle
   }
 
   @Get(':id')
   async getTaskById(@Param('id') id: string) {
-    return this.appService.getTaskById(id);
+    const handle = await this.temporalClient.execute(getTaskByIdWorkflow, {
+      args: [id],
+      taskQueue: 'default',
+      workflowId: 'wf-id-' + Math.floor(Math.random() * 1000),
+    });
+    return handle
   }
 
   @Put(':id')
   async updateTask(@Param('id') id: string, @Body() taskData: any) {
-    return this.appService.updateTask(id, taskData);
+    const handle = await this.temporalClient.execute(updateTaskWorkflow, {
+      args: [id, taskData],
+      taskQueue: 'default',
+      workflowId: 'wf-id-' + Math.floor(Math.random() * 1000),
+    });
+    return handle
   }
 
   @Delete(':id')
   async deleteTask(@Param('id') id: string) {
-    return this.appService.deleteTask(id);
+    const handle = await this.temporalClient.execute(deleteTaskWorkflow, {
+      args: [id],
+      taskQueue: 'default',
+      workflowId: 'wf-id-' + Math.floor(Math.random() * 1000),
+    });
+    return handle
+    // return this.appService.deleteTask(id);
   }
 }
