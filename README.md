@@ -4,17 +4,6 @@ This project is a task management service built using NestJS and Temporal. The s
 ## Getting Started
 To run this project locally, you will need to have Docker and Node.js installed on your machine.
 
-## Temporal Server
-The Temporal server is required to run the workflows. We will use Docker to set up Temporal quickly.
-
-Run the following command to start the Temporal server using Docker Compose:
-
-```
-docker compose -f ./docker-compose.yml --env-file ./env.temporal up -d
-```
-
-The temporal-ui will run at http://localhost:8080.
-
 ## Installation
 1. Clone the repository:
 ```
@@ -26,6 +15,17 @@ cd task-management-service
 ```
 npm install
 ```
+
+## Temporal Server
+The Temporal server is required to run the workflows. We will use Docker to set up Temporal quickly.
+
+Run the following command to start the Temporal server using Docker Compose:
+
+```
+docker compose -f ./docker-compose.yml --env-file ./env.temporal up -d
+```
+
+The temporal-ui will run at http://localhost:8080.
 
 ## Usage
 
