@@ -16,13 +16,18 @@ cd task-management-service
 npm install
 ```
 
+3. Docker config:
+```
+docker network create temporal-network
+```
+
 ## Temporal Server
 The Temporal server is required to run the workflows. We will use Docker to set up Temporal quickly.
 
 Run the following command to start the Temporal server using Docker Compose:
 
 ```
-docker compose -f ./docker-compose.yml --env-file ./env.temporal up -d
+docker compose up
 ```
 
 The temporal-ui will run at http://localhost:8080.
